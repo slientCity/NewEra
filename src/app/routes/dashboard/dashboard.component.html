@@ -1,0 +1,146 @@
+<breadcrumb></breadcrumb>
+
+<div class="matero-row" fxLayout="row wrap">
+
+  <!-- Statistics -->
+  <div class="matero-col" fxFlex.gt-sm="25" fxFlex.gt-xs="50" fxFlex="100"
+       *ngFor="let stat of stats">
+    <mat-card [ngClass]="['text-black', stat.color]">
+      <mat-card-title class="f-s-18 f-w-100">{{stat.title}}{{stat.task}}</mat-card-title>
+      <mat-card-content>
+        <h2><span>{{stat.amount}} / {{stat.total}} 个</span></h2>
+        <mtx-progress [value]="stat.progress.value"
+                      height="3px"
+                      foreground="#4DB6AC"
+                      background='white'>
+        </mtx-progress>
+        <small class="text-muted">本月完成度: <span style="font-size: 15px;"> {{stat.progress.value}}%</span></small>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Charts -->
+  <div class="matero-col" fxFlex="100" fxFlex.gt-sm="60">
+    <mat-card>
+      <mat-card-subtitle><h2>燃尽图</h2></mat-card-subtitle>
+      <mat-card-content>
+        <span style="font-size: 15px;">目标完成 : {{targetAmount}}</span>&nbsp;&nbsp;
+        <span style="font-size: 15px;">实际完成 : {{finalAmount}}</span>&nbsp;&nbsp;
+        <span style="font-size: 15px;">新增目标 : {{addRequest}}</span>
+      </mat-card-content>
+      <div id="chart1" style="background-color: #ECEFF1;"></div>
+    </mat-card>
+  </div>
+  <div class="matero-col" fxFlex="100" fxFlex.gt-sm="40">
+    <mat-card>
+      <mat-card-subtitle><h2>项目完成度</h2></mat-card-subtitle>
+      <mat-card-content>
+        <span style="font-size: 15px;color: #78909C;">{{percentage |  number:'0.1-1'}} %</span>
+      </mat-card-content>      
+      <div id="chart2"></div>
+    </mat-card>
+  </div>
+
+  <!-- Others -->
+  <div class="matero-col" fxFlex.gt-sm="50" fxFlex="100">
+    <mat-card>
+      <mat-card-subtitle><h2>组内周知</h2></mat-card-subtitle>
+      <mat-tab-group class="m--16">
+        <div *ngFor="let info of infos">
+          <mat-tab [label]="info.name">
+            <div class="m-16">
+              <section class="demo-expansion">
+                <h4>至急事项：</h4>
+                <p style="color: #F44336;">{{info.notice.top}}</p>
+                <mat-accordion>
+                  <mat-expansion-panel #panel1>
+                    <mat-expansion-panel-header style="background-color: #ECEFF1;font-weight: bold;">组内作业</mat-expansion-panel-header>
+                    <p>{{info.notice.inGroup}}</p>
+                  </mat-expansion-panel>
+                  <mat-expansion-panel #panel2>
+                    <mat-expansion-panel-header style="background-color: #ECEFF1;font-weight: bold;">个人事项</mat-expansion-panel-header>
+                    <p>{{info.notice.individual}}</p>
+                  </mat-expansion-panel>
+                  <mat-expansion-panel #panel3>
+                    <mat-expansion-panel-header style="background-color: #ECEFF1;font-weight: bold;">出勤联络</mat-expansion-panel-header>
+                    <p>{{info.notice.clock}}</p>
+                  </mat-expansion-panel>
+                </mat-accordion>
+              </section>
+            </div>
+          </mat-tab>
+        </div>
+      </mat-tab-group>
+    </mat-card>
+  </div>
+
+  <div class="matero-col" fxFlex.gt-sm="50" fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+        <mat-chip-list style="display:none">
+          <mat-chip class="bg-gray-500" selected>初心者</mat-chip>
+          <mat-chip class="bg-green-500" selected>经验者</mat-chip>
+          <mat-chip class="bg-blue-500" selected>熟练工</mat-chip>
+          <mat-chip class="bg-purple-500" selected>专家</mat-chip>
+          <mat-chip class="bg-orange-500" selected>业务领袖</mat-chip>
+        </mat-chip-list>
+  
+        <!-- <div>
+          <button mat-raised-button>Basic</button>
+          <button mat-raised-button color="primary">Primary</button>
+          <button mat-raised-button color="accent">Accent</button>
+          <button mat-raised-button color="warn">Warn</button>
+          <button mat-raised-button disabled>Disabled</button>
+          <a mat-raised-button routerLink=".">Link</a>
+          <button mat-raised-button class="bg-orange-500 text-white">Orange</button>
+          <button mat-raised-button class="bg-teal-500 text-white">Teal</button>
+          <button mat-raised-button class="bg-cyan-500 text-white">Cyan</button>
+          <button mat-raised-button class="bg-purple-500 text-white">Purple</button>
+          <button mat-raised-button class="bg-green-500 text-white">Green</button>
+        </div> -->
+      </mat-card-content>
+
+      <mat-card-subtitle><h2>成员一览</h2></mat-card-subtitle>
+      <mat-list>
+        <mat-list-item *ngFor="let info of infos">
+          <img matListAvatar [src]="info.img" alt="" style="width: 100px;height: 80px;">
+          <h3 matLine> {{info.name}} </h3>
+          <p matLine>
+            <span *ngFor="let tag of info.tags">
+              <mat-chip [ngClass]="[tag.class]" selected>
+                {{tag.content}}
+              </mat-chip>&nbsp;
+            </span>
+          </p>
+        </mat-list-item>
+      </mat-list>
+    </mat-card>
+
+    <!-- <mat-card>
+      <mat-card-subtitle>Revenue Table</mat-card-subtitle>
+      <mat-card-content>
+        <table class="w-full" mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element;"> {{element.position}} </td>
+          </ng-container>
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element;"> {{element.name}} </td>
+          </ng-container>
+          <ng-container matColumnDef="weight">
+            <th mat-header-cell *matHeaderCellDef> Weight </th>
+            <td mat-cell *matCellDef="let element;"> {{element.weight}} </td>
+          </ng-container>
+          <ng-container matColumnDef="symbol">
+            <th mat-header-cell *matHeaderCellDef> Symbol </th>
+            <td mat-cell *matCellDef="let element;"> {{element.symbol}} </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </mat-card-content>
+    </mat-card> -->
+
+  </div>
+</div>
