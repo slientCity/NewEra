@@ -26,13 +26,13 @@ const INFOS = [
   {
     img: 'assets/images/headicon/member1.jpg',
     name: '成员A',
-    notice:{
+    notice: {
       top: '无',
       inGroup: '联络ON Review设计。',
       individual: '无',
       clock: '下周三不在'
     },
-    tags:[
+    tags: [
           {
           class: 'bg-orange-500',
           content: `团队领袖`,
@@ -65,13 +65,13 @@ const INFOS = [
   {
     img: 'assets/images/headicon/member2.jpg',
     name: '成员B',
-    notice:{
+    notice: {
       top: '无',
       inGroup: '无',
       individual: '无',
       clock: '无'
     },
-    tags:[
+    tags: [
       {
         class: 'bg-blue-500',
         content: `团队领袖`,
@@ -93,13 +93,13 @@ const INFOS = [
   {
     img: 'assets/images/headicon/member3.jpg',
     name: '成员C',
-    notice:{
+    notice: {
       top: '明天半天Training，下午开始实作业',
       inGroup: '无',
       individual: '无',
       clock: '无'
     },
-    tags:[
+    tags: [
       {
         class: 'bg-gray-500',
         content: `语言交流`,
@@ -117,13 +117,13 @@ const INFOS = [
   {
     img: 'assets/images/headicon/member4.jpg',
     name: '成员D',
-    notice:{
+    notice: {
       top: '请通知ON加紧review。',
       inGroup: '今天开始测试',
       individual: '无',
       clock: '无'
     },
-    tags:[
+    tags: [
       {
         class: 'bg-blue-500',
         content: `语言交流`,
@@ -141,13 +141,13 @@ const INFOS = [
   {
     img: 'assets/images/headicon/member5.jpg',
     name: '成员E',
-    notice:{
+    notice: {
       top: '明天休假',
       inGroup: '无',
       individual: '无',
       clock: '无'
     },
-    tags:[
+    tags: [
       {
         class: 'bg-green-500',
         content: `语言交流`,
@@ -169,30 +169,21 @@ export class DashboardService {
 
   stats = [
     {
-      title: '任务完成率',
+      title: '任务完成',
+      amount: '52',
+      total: '71',
+      color: 'bg-white-500',
+    },
+    {
+      title: '任务延误',
+      amount: '13',
+      total: '71',
+      color: 'bg-white-500',
+    },
+    {
+      title: '新增任务反映',
       amount: '20',
-      total: '70',
-      progress: {
-        value: 28.6,
-      },
-      color: 'bg-white-500',
-    },
-    {
-      title: '任务延误率',
-      amount: '4',
-      total: '8',
-      progress: {
-        value: 50,
-      },
-      color: 'bg-white-500',
-    },
-    {
-      title: '额外需求反映率',
-      amount: '2',
-      total: '17',
-      progress: {
-        value: 11.8,
-      },
+      total: '27',
       color: 'bg-white-500',
     },
     {
@@ -200,9 +191,6 @@ export class DashboardService {
       task: '单元测试',
       amount: '76',
       total: '140',
-      progress: {
-        value: 54.3,
-      },
       color: 'bg-white-500',
     },
   ];
@@ -226,46 +214,35 @@ export class DashboardService {
       stroke: {
         curve: 'smooth',
       },
-      colors: ["#26A69A", "#FFCC80", "#E57373"],
+      colors: ['#26A69A', '#FFCC80', '#E57373'],
       fill: {
-        opacity: 1 //设置图形的透明度，数值越小透明度越高，数值范围0-1
+        opacity: 1 // 设置图形的透明度，数值越小透明度越高，数值范围0-1
       },
       series: [
         {
           name: '计划任务',
-          data: [70, 68, 67, 67, 66, 64, 64, 62, 57, 54, 53, 50, 47, 47, 43, 41, 40, 33],
+          data: [50, 47, 42, 33, 21, 8, 6],
         },
         {
           name: '实际任务',
-          data: [70, 70, 66, 65, 65, 65, 65, 65, 64, 64, 59, 57, 57, 55, 53, 52, 50, null],
+          data: [58, 50, 43, 31, 28, 19, null],
         },
         {
           name: '新增任务',
           type: 'bar',
-          data: [8, 5, 3, 2, 7, null, 2, 7, 13, 4, 2, 4, 1, null, 3, 3, 3, null],
+          data: [8, 5, 3, 2, 7, null, 2],
         },
-      ],      
+      ],
       xaxis: {
         type: 'date',
         categories: [
-          '12/30',
-          '01/01',
-          '01/03',
-          '01/05',
-          '01/07',
-          '01/09',
-          '01/11',
-          '01/13',
-          '01/15',
-          '01/17',
-          '01/19',
-          '01/21',
-          '01/23',
-          '01/25',
-          '01/27',
-          '01/29',
-          '01/31',
-          '02/02',
+          '02/15',
+          '02/16',
+          '02/17',
+          '02/18',
+          '02/19',
+          '02/20',
+          '02/21',
         ],
       },
       tooltip: {
@@ -336,15 +313,13 @@ export class DashboardService {
   percentage: number;
 
   constructor(private http: HttpClient) {
-    this.targetAmount = 30;
-    this.finalAmount = 20;
-    this.addRequest = 67;
-    let allTask = this.charts[1].series[0].data;
-    this.percentage = (allTask.reduce((total, item) => total + item, 0))/700;
+    this.targetAmount = 44;
+    this.finalAmount = 39;
+    this.addRequest = 27;
+    const allTask = this.charts[1].series[0].data;
+    this.percentage = (allTask.reduce((total, item) => total + item, 0)) / 700;
   }
 
-  ngOnInit() {
-  }
   getData() {
     return ELEMENT_DATA;
   }

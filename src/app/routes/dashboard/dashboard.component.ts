@@ -25,10 +25,10 @@ import { DashboardService } from './dashboard.service';
   providers: [DashboardService],
 })
 export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
-  targetAmount:number;
-  finalAmount:number;
-  addRequest:number;
-  percentage:number;
+  targetAmount: number;
+  finalAmount: number;
+  addRequest: number;
+  percentage: number;
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = this.dashboardSrv.getData();
 
@@ -39,6 +39,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   chart2 = null;
 
   stats = this.dashboardSrv.getStats();
+
+  burnday = new Date();
+  maxBurnday = new Date();
 
   constructor(
     private dashboardSrv: DashboardService,
